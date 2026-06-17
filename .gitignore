@@ -1,0 +1,11 @@
+# Node dependencies
+node_modules/
+# Environment 
+.env
+# Database config (local only)
+src/db/db.js
+
+#for deployment
+web.config
+web.*.config
+

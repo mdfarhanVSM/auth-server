@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title><%= appName %></title>
+  <link rel="icon" type="image/png" href="/assets/icons/192x192.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .bg-primary {
+      background-color: #A04D95;
+    }
+
+    .text-primary {
+      color: #A04D95;
+    }
+
+    .focus-ring:focus {
+      border-color: #A04D95;
+      box-shadow: 0 0 0 2px rgba(160, 77, 149, 0.2);
+    }
+
+    .input-group {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      outline: none;
+      transition: 0.3s;
+      font-size: 14px;
+    }
+
+    .input-group label {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: white;
+      padding: 0 4px;
+      color: #6b7280;
+      transition: 0.3s;
+      pointer-events: none;
+    }
+
+    .input-group input:focus + label,
+    .input-group input:not(:placeholder-shown) + label {
+      top: -10px;
+      left: 12px;
+      font-size: 12px;
+      color: #A04D95;
+      transform: translateY(0);
+    }
+
+    .input-group input:focus {
+      border-color: #A04D95;
+      box-shadow: 0 0 0 2px rgba(160, 77, 149, 0.2);
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #6b7280;
+      user-select: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="flex items-center justify-center min-h-screen w-full bg-gradient-to-r from-purple-600 to-pink-500">
+
+    <div class="flex flex-col items-center w-full max-w-[21rem] bg-white rounded-lg shadow-lg p-8 border border-[#A04D95]">
+
+      <img
+        src="/assets/icons/192x192.png"
+        alt="logo"
+        class="h-36 w-36 object-contain"
+      />
+
+      <!-- App Name -->
+      <p class="text-md text-primary font-semibold pb-8 pt-1">
+        <%= appName %>
+      </p>
+
+      <div class="w-full">
+        <h2 class="text-xl text-center font-semibold text-[#7a7a7a] pb-5">
+          Login
+        </h2>
+
+        <% if (error) { %>
+          <p class="text-red-500 text-center pb-4">
+            <%= error %>
+          </p>
+        <% } %>
+
+        <form method="POST" action="/oauth/authorize">
+
+          <!-- Preserve OAuth params -->
+          <input type="hidden" name="client_id" value="<%= clientId %>" />
+          <input type="hidden" name="redirect_uri" value="<%= redirectUri %>" />
+          <input type="hidden" name="state" value="<%= state %>" />
+          <input type="hidden" name="scope" value="<%= scope %>" />
+
+          <!-- Username -->
+          <div class="input-group">
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder=" "
+              required
+              autofocus
+            />
+            <label for="username">Username</label>
+          </div>
+
+          <!-- Password -->
+          <div class="input-group">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder=" "
+              required
+            />
+            <label for="password">Password</label>
+
+            <span
+              class="password-toggle text-lg"
+              onclick="togglePassword()"
+            >
+              <i class="fa-solid fa-eye" id="eyeIcon"></i>
+            </span>
+          </div>
+
+          <!-- Submit -->
+          <button
+            type="submit"
+            class="w-full py-3 bg-primary text-white font-semibold rounded-lg shadow-md hover:opacity-90 transition-all"
+          >
+            Sign In
+          </button>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function togglePassword() {
+      const passwordInput = document.getElementById("password");
+      const eyeIcon = document.getElementById("eyeIcon");
+
+      if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        eyeIcon.classList.remove("fa-eye");
+        eyeIcon.classList.add("fa-eye-slash");
+      } else {
+        passwordInput.type = "password";
+        eyeIcon.classList.remove("fa-eye-slash");
+        eyeIcon.classList.add("fa-eye");
+      }
+    }
+  </script>
+</body>
+</html>
+
