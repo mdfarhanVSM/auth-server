@@ -22,7 +22,7 @@ const sequelize = new Sequelize(
         },
         timezone: '+05:30',
         logging: (msg) => {
-            console.log([SEQUELIZE ${new Date().toLocaleString('en-IN')}] ${msg});
+            console.log(msg);
         },
         pool: {
             max: 5,
