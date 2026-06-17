@@ -13,7 +13,7 @@ const sequelize = new Sequelize(
         port: 1433,
         dialectOptions: {
             options: {
-                instanceName: process.env.DB_INSTANCE,
+                // instanceName: process.env.DB_INSTANCE,
                 encrypt: false,
                 trustServerCertificate: true,
                 requestTimeout: 30000,
